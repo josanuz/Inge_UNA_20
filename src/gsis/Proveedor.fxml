@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="455.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.ProveedorController">
+   <children>
+      <TitledPane collapsible="false" layoutY="-1.0" prefHeight="455.0" prefWidth="668.0" text="Proveedores" />
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="22.0" prefHeight="41.0" prefWidth="692.0" AnchorPane.bottomAnchor="365.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <TextField fx:id="bprov" prefHeight="25.0" prefWidth="244.0" promptText="Buscar Proveedor" />
+            <Button fx:id="btn" mnemonicParsing="false" onAction="#Crear" text="Crear Proveedor">
+               <HBox.margin>
+                  <Insets left="16.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <TableView fx:id="tabla" layoutX="21.0" layoutY="72.0" prefHeight="325.0" prefWidth="648.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <columns>
+            <TableColumn fx:id="codigo" prefWidth="68.0" text="Codigo" />
+            <TableColumn fx:id="nombre" prefWidth="192.0" text="Nombre" />
+            <TableColumn fx:id="email" prefWidth="137.0" text="e-mail" />
+            <TableColumn fx:id="telefono" prefWidth="122.0" text="Telefono" />
+            <TableColumn fx:id="contacto" prefWidth="122.0" text="Contacto" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

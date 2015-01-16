@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VentanaGestorProveedoresController">
+   <children>
+      <Label layoutX="50.0" layoutY="33.0" prefHeight="35.0" prefWidth="220.0" text="Gestor Proveedores">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="50.0" layoutY="99.0" text="Nombre Proveedor:" />
+      <TextField fx:id="nombre" layoutX="50.0" layoutY="126.0" />
+      <Label layoutX="50.0" layoutY="172.0" text="Dirreción:" />
+      <TextField fx:id="direccion" layoutX="50.0" layoutY="200.0" />
+      <Label layoutX="50.0" layoutY="246.0" text="Teléfono de Contacto:" />
+      <Label layoutX="50.0" layoutY="282.0" text="Oficina" />
+      <TextField fx:id="telOficina" layoutX="101.0" layoutY="278.0" prefHeight="25.0" prefWidth="105.0" />
+      <TextField fx:id="contacto" layoutX="308.0" layoutY="126.0" />
+      <TextField fx:id="email" layoutX="308.0" layoutY="206.0" promptText="ejemplo@dominio.com" />
+      <Label layoutX="308.0" layoutY="100.0" text="Nombre Contacto:" />
+      <Label layoutX="308.0" layoutY="172.0" text="Correo Electronico" />
+      <Label layoutX="421.0" layoutY="270.0" text="Tipo Entrega:" />
+      <Label layoutX="308.0" layoutY="270.0" text="Estado:" />
+      <ComboBox fx:id="activo" layoutX="300.0" layoutY="299.0" prefHeight="25.0" prefWidth="80.0" promptText="Activo" />
+      <ComboBox fx:id="entrega" layoutX="416.0" layoutY="299.0" prefHeight="25.0" prefWidth="98.0" promptText="Inmediata" />
+      <Button fx:id="btn" layoutX="377.0" layoutY="346.0" mnemonicParsing="false" onAction="#guardar" prefHeight="25.0" prefWidth="58.0" text="OK" />
+   </children>
+</AnchorPane>

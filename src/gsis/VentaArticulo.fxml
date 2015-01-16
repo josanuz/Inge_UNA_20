@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import java.net.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="455.0" prefWidth="664.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.VentaArticuloController">
+   
+    <stylesheets>
+        <URL value="@/gsis/CSS/ventaarticulo.css" />
+    </stylesheets>
+    <children>
+        <Label layoutX="19.0" layoutY="207.0" text="Cédula:" />
+        <Label layoutX="91.0" layoutY="122.0" text="Cliente:">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </Label>
+        <Label layoutX="185.0" layoutY="27.0" text="Venta de Artículos">
+            <font>
+                <Font size="25.0" />
+            </font>
+        </Label>
+        <TextField fx:id="cedCliente" layoutX="83.0" layoutY="203.0" />
+        <Label layoutX="249.0" layoutY="90.0" text="Código de Artículo:" />
+        <TextField fx:id="codArticulo" layoutX="363.0" layoutY="86.0" prefHeight="25.0" prefWidth="87.0" />
+        <Label layoutX="461.0" layoutY="90.0" text="Cantidad:" />
+        <Button id="add" layoutX="586.0" layoutY="87.0" mnemonicParsing="false" onAction="#Agregar" prefHeight="25.0" prefWidth="29.0" text="+" />
+        <TableView fx:id="tb_LineaFactura" layoutX="246.0" layoutY="138.0" prefHeight="200.0" prefWidth="370.0">
+            <columns>
+                <TableColumn fx:id="tc_cantidad" prefWidth="68.0" text="Cantidad" />
+                <TableColumn fx:id="tc_articulo" prefWidth="186.0" text="Artículo" />
+                <TableColumn fx:id="tc_precio" prefWidth="115.0" text="Precio" />
+            </columns>
+        </TableView>
+        <Label layoutX="252.0" layoutY="343.0" text="Total:" />
+        <Label layoutX="422.0" layoutY="346.0" text="₡ "/>
+        <Label fx:id="total" layoutX="543.0" layoutY="346.0" prefHeight="17.0" prefWidth="72.0" text="000.00" />
+      <Button layoutX="97.0" layoutY="265.0" mnemonicParsing="false" onAction="#consultarCliente" prefHeight="25.0" prefWidth="122.0" text="Consultar Cliente" />
+      <Button layoutX="249.0" layoutY="399.0" mnemonicParsing="false" onAction="#consultarArticulo" prefHeight="25.0" prefWidth="122.0" text="Consultar Articulo" />
+      <Button layoutX="560.0" layoutY="399.0" mnemonicParsing="false" text="Facturar" />
+      <TextField fx:id="cantArticulo" layoutX="518.0" layoutY="87.0" prefHeight="25.0" prefWidth="51.0" />
+    </children>
+</AnchorPane>

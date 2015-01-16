@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="265.0" prefWidth="512.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.VentanaConsultarFacturaController">
+   <children>
+      <Label layoutX="180.0" layoutY="21.0" text="Consulta de Facturas">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="39.0" layoutY="80.0" text=" Fechas:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="48.0" layoutY="113.0" text="Inicial:" />
+      <Label layoutX="48.0" layoutY="166.0" text="Final:" />
+      <DatePicker layoutX="101.0" layoutY="109.0" prefHeight="25.0" prefWidth="95.0" />
+      <DatePicker layoutX="101.0" layoutY="162.0" prefHeight="25.0" prefWidth="95.0" />
+      <Label layoutX="250.0" layoutY="113.0" text="Cédula Cliente:" />
+      <TextField layoutX="383.0" layoutY="109.0" prefHeight="25.0" prefWidth="104.0" />
+      <TextField layoutX="383.0" layoutY="180.0" prefHeight="25.0" prefWidth="104.0" />
+      <Label layoutX="250.0" layoutY="175.0" text="Consecutivo Facrtura:" />
+      <Button layoutX="55.0" layoutY="232.0" mnemonicParsing="false" text="Consultar" />
+   </children>
+</AnchorPane>
