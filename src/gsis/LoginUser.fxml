@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="276.0" prefWidth="230.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.LoginUserController">
+    <stylesheets>
+        <URL value="@/gsis/CSS/loginuser.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="64.0" layoutY="29.0" prefHeight="46.0" prefWidth="114.0" text="  Login">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="29.0" fitWidth="28.0" layoutX="33.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/username.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="username" layoutX="84.0" layoutY="118.0" prefHeight="25.0" prefWidth="125.0" promptText="username" />
+      <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="33.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Imagenes/password.png" />
+         </image>
+      </ImageView>
+      <PasswordField fx:id="password" layoutX="84.0" layoutY="176.0" prefHeight="25.0" prefWidth="125.0" promptText="password" />
+      <Button layoutX="100.0" layoutY="229.0" mnemonicParsing="false" onAction="#Login" text="Sign in" />
+   </children>
+</AnchorPane>

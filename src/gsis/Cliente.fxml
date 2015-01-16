@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.ClienteController">
+    <stylesheets>
+        <URL value="@/gsis/CSS/cliente.css" />
+    </stylesheets>
+   <children>
+      <TableView fx:id="tv_clientes" layoutX="64.0" layoutY="112.0" prefHeight="259.0" prefWidth="498.0">
+        <columns>
+          <TableColumn fx:id="tc_codigo" prefWidth="75.0" text="Código" />
+          <TableColumn fx:id="tc_nombre" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="tc_telefono" prefWidth="96.0" text="Teléfono" />
+            <TableColumn fx:id="tc_dirent" prefWidth="163.0" text="Dirección Entrega" />
+            <TableColumn fx:id="tc_email" prefWidth="88.0" text="Email" />
+        </columns>
+      </TableView>
+      <TextField fx:id="buscarCliente" layoutX="127.0" layoutY="69.0" prefHeight="25.0" prefWidth="161.0" promptText="Buscar Cliente" />
+      <Label layoutX="253.0" layoutY="14.0" prefHeight="43.0" prefWidth="112.0" text="Clientes">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Button layoutX="323.0" layoutY="69.0" mnemonicParsing="false" text="Crear Cliente" />
+   </children>
+</AnchorPane>

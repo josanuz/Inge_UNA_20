@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="429.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.ArticulosController">
+   <children>
+      <Label layoutX="251.0" layoutY="14.0" prefHeight="46.0" prefWidth="110.0" text="Artículos">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tabla" layoutX="53.0" layoutY="122.0" prefHeight="258.0" prefWidth="494.0">
+         <columns>
+            <TableColumn fx:id="codigo" prefWidth="75.0" text="Código" />
+            <TableColumn fx:id="descripcion" prefWidth="111.0" text="Descipción" />
+            <TableColumn fx:id="costo" prefWidth="142.0" text="Costo" />
+            <TableColumn fx:id="utilidad" prefWidth="60.0" text="Utilidad" />
+            <TableColumn fx:id="esGrabado" prefWidth="102.0" text="EsGrabado" />
+         </columns></TableView>
+      <TextField fx:id="buscar" layoutX="204.0" layoutY="72.0" prefHeight="25.0" prefWidth="179.0" promptText="Buscar Artículo" />
+   </children>
+</AnchorPane>

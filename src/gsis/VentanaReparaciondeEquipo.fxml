@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="523.0" prefWidth="625.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controlador.VentanaReparaciondeEquipoController">
+   <children>
+      <Label layoutX="34.0" layoutY="36.0" text="Reparación de Equipo">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="34.0" layoutY="89.0" text="Información del Eqipo">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="34.0" layoutY="146.0" prefHeight="25.0" prefWidth="214.0" />
+      <Text layoutX="34.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca:" />
+      <DatePicker layoutX="34.0" layoutY="288.0" prefHeight="25.0" prefWidth="214.0" />
+      <Label layoutX="34.0" layoutY="250.0" text="Fecha Ingreso" />
+      <Label layoutX="34.0" layoutY="183.0" text="Número de Serie:" />
+      <TextArea layoutX="28.0" layoutY="377.0" prefHeight="124.0" prefWidth="225.0" />
+      <TextField layoutX="34.0" layoutY="217.0" prefHeight="25.0" prefWidth="214.0" />
+      <Label layoutX="38.0" layoutY="340.0" text="Detalle:" />
+   </children>
+</AnchorPane>

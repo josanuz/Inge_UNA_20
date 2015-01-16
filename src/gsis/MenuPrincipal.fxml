@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import java.net.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.MenuPrincipalController">   
+    <stylesheets>
+        <URL value="@/gsis/CSS/menuprincipal.css" />
+    </stylesheets>
+    <children>
+        <Label layoutX="241.0" layoutY="24.0" text="Menu Principal">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="293.0" fitWidth="331.0" layoutX="274.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../Imagenes/gadroves2.jpg" />
+            </image>
+        </ImageView>
+        <Button layoutX="42.0" layoutY="68.0" mnemonicParsing="false" onAction="#Proveedores" prefHeight="25.0" prefWidth="183.0" text="Proveedores" />
+        <Button layoutX="44.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="183.0" text="Bodega" />
+        <Button layoutX="42.0" layoutY="226.0" mnemonicParsing="false" onAction="#Venta" prefHeight="25.0" prefWidth="183.0" text="Ventas" />
+        <Button layoutX="44.0" layoutY="150.0" mnemonicParsing="false" onAction="#Usuarios" prefHeight="25.0" prefWidth="183.0" text="Usuarios" />
+        <Button layoutX="44.0" layoutY="188.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="183.0" text="Compras" />
+        <Button layoutX="42.0" layoutY="273.0" mnemonicParsing="false" onAction="#ReparaciondeEquipo" prefHeight="25.0" prefWidth="183.0" text="Reparación de equipo" />
+        <Button layoutX="42.0" layoutY="321.0" mnemonicParsing="false" onAction="#ConsultarFacturas" prefHeight="25.0" prefWidth="183.0" text="Facturas" />
+    </children>
+</AnchorPane>
