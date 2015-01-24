@@ -10,99 +10,74 @@ import javafx.beans.property.SimpleIntegerProperty;
  * @author Juan
  */
 public class Linea_Factura {
-    
-    public Linea_Factura(Integer numero_factura,Integer codigo_articulo,Integer cantidad,Double precio,Double impuesto,Double descuento){
+    public Linea_Factura(Integer numero_factura, Articulo art, Integer cantidad, Double precio, Double descuento) {
         this.numero_factura = new SimpleIntegerProperty(numero_factura);
-        this.codigo_articulo = new SimpleIntegerProperty(codigo_articulo);
+        articulo = art;
         this.cantidad = new SimpleIntegerProperty(cantidad);
         this.precio = new SimpleDoubleProperty(precio);
-        this.impuesto = new SimpleDoubleProperty(impuesto);
         this.descuento = new SimpleDoubleProperty(descuento);
     }
-    
-    
-    
-     public IntegerProperty numero_facturaProperty(){
-        return this.numero_factura;
-    }
-     
-    public IntegerProperty codigo_articuloProperty(){
-        return this.codigo_articulo;
-    }
-    
-    public IntegerProperty cantidadProperty(){
-        return this.cantidad;
-    }
-    
-    public DoubleProperty precioProperty(){
-        return this.precio;
-    }
-    
-    public DoubleProperty impuestoProperty(){
-        return this.impuesto;
-    }
-    
-    public DoubleProperty descuentoProperty(){
-        return this.descuento;
-    }
-    
-    
 
-    public Integer getNumero() {
+    public int getNumero_factura() {
         return numero_factura.get();
     }
 
-    public void setNumero(Integer numero) {
-        this.numero_factura.set(numero);
+    public IntegerProperty numero_facturaProperty() {
+        return numero_factura;
     }
 
-    public Integer getCodigo_articulo() {
-        return codigo_articulo.get();
+    public void setNumero_factura(int numero_factura) {
+        this.numero_factura.set(numero_factura);
     }
 
-    public void setCodigo_articulo(Integer codigo_articulo) {
-        this.codigo_articulo.set(codigo_articulo);
+    public Articulo getArticulo() {
+        return articulo;
     }
 
-    public Integer getCantidad() {
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
+    }
+
+    public int getCantidad() {
         return cantidad.get();
     }
 
-    public void setCantidad(Integer cantidad) {
+    public IntegerProperty cantidadProperty() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
         this.cantidad.set(cantidad);
     }
 
-    public Double getPrecio() {
+    public double getPrecio() {
         return precio.get();
     }
 
-    public void setPrecio(Double precio) {
+    public DoubleProperty precioProperty() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
         this.precio.set(precio);
     }
 
-    public Double getImpuesto() {
-        return impuesto.get();
-    }
-
-    public void setImpuesto(Double impuesto) {
-        this.impuesto.set(impuesto);
-    }
-
-    public Double getDescuento() {
+    public double getDescuento() {
         return descuento.get();
     }
 
-    public void setDescuento(Double descuento) {
+    public DoubleProperty descuentoProperty() {
+        return descuento;
+    }
+
+    public void setDescuento(double descuento) {
         this.descuento.set(descuento);
     }
-    
-   
-    
+
     private IntegerProperty numero_factura;
-    private IntegerProperty codigo_articulo;
+    private Articulo articulo;
     private IntegerProperty cantidad;
     private DoubleProperty precio;
-    private DoubleProperty impuesto;
     private DoubleProperty descuento;
     
     

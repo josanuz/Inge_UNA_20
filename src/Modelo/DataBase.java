@@ -5,6 +5,10 @@
  */
 
 package Modelo;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,33 +17,66 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+
 /**
  *
  * @author Geykel
+ * @version 0.1
+ * @see java.util.Observable
+ * @see java.util.Observer
  */
 public class DataBase extends Observable implements Observer{
-
-    private DataBase() throws ClassNotFoundException{
-        Class.forName("com.mysql.jdbc.Driver");
-        this.host = "jdbc:mysql://127.0.0.1";
-        this.user = "root";
-        this.pass = "root";
-        this.port = 3306;
-        conectado = false;
-    }
-    
-    public static DataBase getInstance() throws ClassNotFoundException {
-        if(INSTANCE == null){
-            INSTANCE = new DataBase();
+    private DataBase() {
+        Observable s;
+        Properties props = new Properties();
+        FileInputStream fis = null;
+        basicDataSource = new BasicDataSource();
+        try {
+            fis = new FileInputStream("db.properties");
+            props.load(fis);
+            this.host = props.getProperty("DBUrl");
+            this.pass = props.getProperty("DBPass");
+            this.user = props.getProperty("DBUser");
+            this.port = Integer.parseInt(props.getProperty("DBPort"));
+            this.databaseName = props.getProperty("DBName");
+            basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+            basicDataSource.setUsername(this.user);
+            basicDataSource.setPassword(this.pass);
+            basicDataSource.setUrl(this.host);
+        } catch (FileNotFoundException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+            this.conectado = false;
+            e.printStackTrace();
+        } catch (IOException e) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, e);
+            this.conectado = false;
+            e.printStackTrace();
         }
+    }
+
+    public static DataBase getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new DataBase();
         return INSTANCE;
     }
-    
+
+    public Connection getConnection() throws SQLException {
+        return this.basicDataSource.getConnection();
+    }
+
     public boolean conectar() throws SQLException{
             if(conectado == false){
-                con = DriverManager.getConnection(this.host,this.user,this.pass);
+                basicDataSource = new BasicDataSource();
+                basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+                basicDataSource.setUsername(this.user);
+                basicDataSource.setPassword(this.pass);
+                basicDataSource.setUrl(this.host);
+
                 conectado = true;
                 this.setChanged();
                 this.notifyObservers();
@@ -48,34 +85,38 @@ public class DataBase extends Observable implements Observer{
     }
     
     public boolean isConnected(){
-        return conectado;
+        return !basicDataSource.isClosed();
     }
     
     public void close() throws SQLException{
-            if(conectado = true && con != null){
+        if (conectado = true && basicDataSource != null) {
                 conectado = false;
                 this.setChanged();
                 this.notifyObservers();
-                con.close();  
+            basicDataSource.close();
             }
     }
     
     public ResultSet ExecuteQuery(String sql) throws SQLException{
         ResultSet resp = null;
             if(this.conectado == true){
-                Statement stm = con.createStatement();
+                Connection tmp = getConnection();
+                Statement stm = tmp.createStatement();
                 resp = stm.executeQuery(sql);
+                tmp.close();
             }
         return resp;
     }
     
     public void insertUpdateDelete(String sql) throws SQLException{
-        Statement s = con.createStatement();
-        s.execute(sql);
+        Connection tmp = getConnection();
+        Statement stm = tmp.createStatement();
+        stm.execute(sql);
+        tmp.close();
     }
     
     public PreparedStatement getStament(String sql) throws SQLException{
-        return con.prepareStatement(sql);
+        return basicDataSource.getConnection().prepareStatement(sql);
     }
     
     public boolean setConnection(String host, int port, String user, String password) throws SQLException{
@@ -89,7 +130,7 @@ public class DataBase extends Observable implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-            if(conectado == true){
+        /** if(conectado == true){
                 try {
                     con.close();
                 } catch (SQLException ex) {
@@ -103,14 +144,15 @@ public class DataBase extends Observable implements Observer{
             this.conectar();//al cambiar la informacion del servidor se desconecta
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-        }    
+         }**/
     }
     
     private static DataBase INSTANCE = null;
     private boolean conectado;
-    private Connection con;
     private String host;
     private String user;
     private String pass;
     private Integer port;
+    private String databaseName;
+    private BasicDataSource basicDataSource = null;
 }

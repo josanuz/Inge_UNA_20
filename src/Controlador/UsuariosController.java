@@ -6,12 +6,14 @@
 package Controlador;
 
 import static Controlador.ProveedorController.masterData;
+
 import Modelo.Beans.Proveedor;
 import Modelo.Beans.Usuario;
 import Modelo.CargarDatos;
 import Modelo.DataBase;
 import Modelo.Mensajes;
 import gsis.GSIS;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -20,8 +22,11 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.beans.binding.Bindings;
+
 import static javafx.collections.FXCollections.observableArrayList;
+
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -46,8 +51,7 @@ import javafx.stage.Stage;
  *
  * @author Aaron
  */
-public class UsuariosController implements Initializable,Observer {
-
+public class UsuariosController implements Initializable, Observer {
     @FXML
     TextField tf_buscUsuario;
     @FXML
@@ -55,50 +59,40 @@ public class UsuariosController implements Initializable,Observer {
     @FXML
     TableView<Usuario> tw_Usuarios;
     @FXML
-    TableColumn<Usuario,String> tc_nombre;
+    TableColumn<Usuario, String> tc_nombre;
     @FXML
-    TableColumn<Usuario,String> tc_cedula;
+    TableColumn<Usuario, String> tc_cedula;
     @FXML
-    TableColumn<Usuario,String> tc_telefono;
+    TableColumn<Usuario, String> tc_telefono;
     @FXML
-    TableColumn<Usuario,String> tc_dir;
+    TableColumn<Usuario, String> tc_dir;
     @FXML
-    TableColumn<Usuario,String> tc_rol;
-
+    TableColumn<Usuario, String> tc_rol;
     private Stage stage;
     private Stage owner;
-    
     public static final ObservableList<Usuario> masterData = observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            DataBase.getInstance().addObserver(this);
-        } catch (ClassNotFoundException ex) {
-            Mensajes.ExceptionDialog(ex,stage);
-            Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DataBase.getInstance().addObserver(this);
         this.tc_cedula.setCellValueFactory(new PropertyValueFactory("cedula"));
         this.tc_dir.setCellValueFactory(new PropertyValueFactory("direccion"));
         this.tc_nombre.setCellValueFactory(new PropertyValueFactory("nombre"));
         this.tc_rol.setCellValueFactory(new PropertyValueFactory("rol"));
         this.tc_telefono.setCellValueFactory(new PropertyValueFactory("telefono"));
-        
         FilteredList<Usuario> filteredData = new FilteredList<>(masterData, u -> true);
         SortedList<Usuario> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(tw_Usuarios.comparatorProperty());
         this.tw_Usuarios.setItems(sortedData);
-        
         this.tf_buscUsuario.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(u -> {
                 if (newValue == null || newValue.isEmpty()) return true;
                 String lowerCaseFilter = newValue.toLowerCase();
-		if( ((Usuario)u).getNombre().toLowerCase().contains(lowerCaseFilter) ) return true;
-                else if(((Usuario)u).getCedula().toLowerCase().contains(lowerCaseFilter)) return true;
+                if (((Usuario) u).getNombre().toLowerCase().contains(lowerCaseFilter)) return true;
+                else if (((Usuario) u).getCedula().toLowerCase().contains(lowerCaseFilter)) return true;
                 return false;
             });
-	});
-        
+        });
         this.tw_Usuarios.setRowFactory((TableView<Usuario> param) -> {
             final TableRow<Usuario> row = new TableRow<>();
             final ContextMenu rowMenu = new ContextMenu();
@@ -107,55 +101,54 @@ public class UsuariosController implements Initializable,Observer {
             removeItem.setOnAction((ActionEvent event) -> {
                 Eliminar(row.getItem());
             });
-            editItem.setOnAction((ActionEvent event)->{
+            editItem.setOnAction((ActionEvent event) -> {
                 Modificar(row.getItem());
             });
             rowMenu.getItems().addAll(editItem, removeItem);
             row.contextMenuProperty().bind(Bindings.when(Bindings.isNotNull(row.itemProperty()))
-               .then(rowMenu)
-               .otherwise((ContextMenu)null));
+                    .then(rowMenu)
+                    .otherwise((ContextMenu) null));
             return row;
         });
-        
     }
-    
-    private void Eliminar(Usuario u){
-        if(Mensajes.ComfirmDialog("Eliminar Usuario","¿Esta seguro que quiere eliminar el Usuario?",stage)){
+
+    private void Eliminar(Usuario u) {
+        if (Mensajes.ComfirmDialog("Eliminar Usuario", "¿Esta seguro que quiere eliminar el Usuario?", stage)) {
             try {
-                DataBase.getInstance().insertUpdateDelete("delete from gsisinve.usuario where cedula ='"+u.getCedula()+"'");
+                DataBase.getInstance().insertUpdateDelete("delete from gsisinve.usuario where cedula ='" + u.getCedula() + "'");
                 masterData.remove(u);
-                Mensajes.InformationDialog("El Usuario ha sido eliminado!!!",stage);
-            } catch (SQLException | ClassNotFoundException ex) {
-                Mensajes.ExceptionDialog(ex,stage);
+                Mensajes.InformationDialog("El Usuario ha sido eliminado!!!", stage);
+            } catch (SQLException ex) {
+                Mensajes.ExceptionDialog(ex, stage);
                 Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
-    private void Modificar (Usuario u) {
-        FXMLLoader loader  = new FXMLLoader(GSIS.class.getResource("Mantenimiento Usuarios.fxml"));
+
+    private void Modificar(Usuario u) {
+        FXMLLoader loader = new FXMLLoader(GSIS.class.getResource("Mantenimiento Usuarios.fxml"));
         Stage stage2 = new Stage();
         try {
-            stage2.setScene(new Scene((Pane)loader.load()));
+            stage2.setScene(new Scene((Pane) loader.load()));
         } catch (IOException ex) {
-            Mensajes.ExceptionDialog(ex,stage);
+            Mensajes.ExceptionDialog(ex, stage);
             Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        MantenimientoUsuariosController controller =loader.<MantenimientoUsuariosController>getController();
-        controller.initData(stage2,stage,u);
+        MantenimientoUsuariosController controller = loader.<MantenimientoUsuariosController>getController();
+        controller.initData(stage2, stage, u);
         stage2.show();
     }
-    
+
     @FXML
-    private void Crear (ActionEvent event) throws IOException {
-        FXMLLoader loader  = new FXMLLoader(GSIS.class.getResource("Mantenimiento Usuarios.fxml"));
+    private void Crear(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(GSIS.class.getResource("Mantenimiento Usuarios.fxml"));
         Stage stage2 = new Stage();
-        stage2.setScene(new Scene((Pane)loader.load()));
-        MantenimientoUsuariosController controller =loader.<MantenimientoUsuariosController>getController();
-        controller.initData(stage2,stage,null);
+        stage2.setScene(new Scene((Pane) loader.load()));
+        MantenimientoUsuariosController controller = loader.<MantenimientoUsuariosController>getController();
+        controller.initData(stage2, stage, null);
         stage2.show();
     }
-    
+
     private void cerrarVentana(ActionEvent event) {
         this.owner.show();
         this.stage.close();
@@ -166,9 +159,9 @@ public class UsuariosController implements Initializable,Observer {
         this.stage = stage;
         try {
             masterData.clear();
-            if(DataBase.getInstance().isConnected()) CargarDatos.cargarUsuarios(masterData);
-        } catch (ClassNotFoundException |SQLException ex) {
-            Mensajes.ExceptionDialog(ex,stage);
+            if (DataBase.getInstance().isConnected()) CargarDatos.cargarUsuarios(masterData);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Mensajes.ExceptionDialog(ex, stage);
             Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -176,12 +169,12 @@ public class UsuariosController implements Initializable,Observer {
     @Override
     public void update(Observable o, Object arg) {
         try {
-            if(DataBase.getInstance().isConnected()){
+            if (DataBase.getInstance().isConnected()) {
                 masterData.clear();
                 CargarDatos.cargarUsuarios(masterData);
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            Mensajes.ExceptionDialog(ex,stage);
+            Mensajes.ExceptionDialog(ex, stage);
             Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

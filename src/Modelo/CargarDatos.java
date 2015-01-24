@@ -48,7 +48,7 @@ public class CargarDatos {
         Articulo ar;
         if (rs != null) {
             while (rs.next()) {
-                ar = new Articulo(rs.getInt("codigo"), rs.getString("descripcion"), rs.getDouble("costo"), rs.getString("utilidad"), rs.getBoolean("esgrabado"));
+                ar = new Articulo(rs.getString("codigo"), rs.getString("descripcion"), rs.getDouble("costo"), rs.getString("utilidad"), rs.getBoolean("esgrabado"));
                 list.add(ar);
             }
             rs.close();
@@ -86,7 +86,7 @@ public class CargarDatos {
         //password = null;
         if (rs != null) {
             rs.next();
-            ar = new Articulo(rs.getInt("codigo"), rs.getString("descripcion"), rs.getDouble("costo"), rs.getString("utilidad"), rs.getBoolean("esgrabado"));
+            ar = new Articulo(rs.getString("codigo"), rs.getString("descripcion"), rs.getDouble("costo"), rs.getString("utilidad"), rs.getBoolean("esgrabado"));
         }
         rs.close();
         return ar;

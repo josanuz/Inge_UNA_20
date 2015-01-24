@@ -5,12 +5,11 @@
  */
 package Controlador;
 
-
 import Modelo.Beans.Articulo;
-
 import Modelo.CargarDatos;
 import Modelo.DataBase;
 import Modelo.Mensajes;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Observable;
@@ -18,7 +17,9 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import static javafx.collections.FXCollections.observableArrayList;
+
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -37,10 +38,8 @@ import javafx.stage.Stage;
  * @author Aaron
  */
 public class ArticulosController implements Initializable, Observer {
-
     private Stage stage;
     private Stage owner;
-
     @FXML
     TableView<Articulo> tabla;
     @FXML
@@ -55,23 +54,16 @@ public class ArticulosController implements Initializable, Observer {
     TableColumn<Articulo, Boolean> esGrabado;
     @FXML
     TextField buscar;
-
     public static final ObservableList<Articulo> masterData = observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            DataBase.getInstance().addObserver(this);
-        } catch (ClassNotFoundException ex) {
-            Mensajes.ExceptionDialog(ex, stage);
-            Logger.getLogger(ProveedorController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DataBase.getInstance().addObserver(this);
         codigo.setCellValueFactory(new PropertyValueFactory("Codigo"));
         descripcion.setCellValueFactory(new PropertyValueFactory("Descripcion"));
         costo.setCellValueFactory(new PropertyValueFactory("Costo"));
         utilidad.setCellValueFactory(new PropertyValueFactory("Utilidad"));
         esGrabado.setCellValueFactory(new PropertyValueFactory("EsGrabado"));
-
         FilteredList<Articulo> filteredData = new FilteredList<>(masterData, p -> true);
         SortedList<Articulo> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(tabla.comparatorProperty());
@@ -82,7 +74,7 @@ public class ArticulosController implements Initializable, Observer {
                     return true;
                 }
                 String lowerCaseFilter = newValue.toLowerCase();
-                if (((Articulo) r).getCodigo2().toLowerCase().contains(lowerCaseFilter)) {
+                if (((Articulo) r).getCodigo().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
                 } else if (((Articulo) r).getDescripcion().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
