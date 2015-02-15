@@ -96,6 +96,11 @@ public class Factura_Venta {
         return lineas;
     }
 
+    /**
+     * public void agregarLinea(Linea_Factura lf){
+     * lf.setNumero_factura(-1);
+     * }*
+     */
     public void setLineas(List<Linea_Factura> lineas) {
         this.lineas = lineas;
     }

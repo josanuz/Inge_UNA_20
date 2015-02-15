@@ -1,21 +1,14 @@
 
 package Modelo.Beans;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class Articulo {
-    public Articulo(String codigo, String descripcion, double costo, String utilidad, boolean esGrabado) {
+    public Articulo(String codigo, String descripcion, double costo, double utilidad, boolean esGrabado) {
         this.codigo = new SimpleStringProperty(codigo);
         this.descripcion = new SimpleStringProperty(descripcion);
         this.costo = new SimpleDoubleProperty(costo);
-        this.utilidad = new SimpleStringProperty(utilidad);
+        this.utilidad = new SimpleDoubleProperty(utilidad);
         this.esGrabado = new SimpleBooleanProperty(esGrabado);
     }
 
@@ -23,7 +16,7 @@ public class Articulo {
         this.codigo = new SimpleStringProperty("");
         this.descripcion = new SimpleStringProperty(null);
         this.costo = new SimpleDoubleProperty(0.0);
-        this.utilidad = new SimpleStringProperty(null);
+        this.utilidad = new SimpleDoubleProperty(0.0);
         this.esGrabado = new SimpleBooleanProperty(false);
     }
 
@@ -55,11 +48,11 @@ public class Articulo {
         this.costo.set(costo);
     }
 
-    public String getUtilidad() {
+    public double getUtilidad() {
         return utilidad.get();
     }
 
-    public void setUtilidad(String utilidad) {
+    public void setUtilidad(double utilidad) {
         this.utilidad.set(utilidad);
     }
 
@@ -67,14 +60,13 @@ public class Articulo {
         return esGrabado.get();
     }
 
-    public void setEsGrabado() {
-        boolean esGrabado1 = !this.isEsGrabado();
-        this.esGrabado.set(esGrabado1);
+    public void setEsGrabado(boolean grabado) {
+        this.esGrabado.set(grabado);
     }
 
     private StringProperty codigo;
     private StringProperty descripcion;
     private DoubleProperty costo;
-    private StringProperty utilidad;
+    private DoubleProperty utilidad;
     private BooleanProperty esGrabado;
 }

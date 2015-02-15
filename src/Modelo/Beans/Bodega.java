@@ -5,36 +5,31 @@
  */
 package Modelo.Beans;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- *
  * @author Juan
  */
 public class Bodega {
-    
-    public Bodega(String ubicacion,Integer codigo){
+    public Bodega(String ubicacion, String codigo) {
         this.ubicacion = new SimpleStringProperty(ubicacion);
-        this.codigo = new SimpleIntegerProperty(codigo);
+        this.codigo = new SimpleStringProperty(codigo);
     }
-    
-    
-    public StringProperty ubicacionProperty(){
+
+    public StringProperty ubicacionProperty() {
         return this.ubicacion;
     }
-    public IntegerProperty codigoProperty(){
+
+    public StringProperty codigoProperty() {
         return this.codigo;
     }
-    
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo.get();
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo.set(codigo);
     }
 
@@ -45,9 +40,7 @@ public class Bodega {
     public void setUbicacion(String ubicacion) {
         this.ubicacion.set(ubicacion);
     }
-    
-    
-    private IntegerProperty codigo;
+
+    private StringProperty codigo;
     private StringProperty ubicacion;
-    
 }
