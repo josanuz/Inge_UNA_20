@@ -3,6 +3,13 @@ package gsis;
 import Controlador.LoginUserController;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import Modelo.Beans.Articulo;
+import Modelo.Beans.Bodega;
+import Modelo.Mensajes;
+import Modelo.dao.ArticuloDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,16 +22,14 @@ public class GSIS extends Application {
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginUser.fxml"));
-        //LoginUserController controller = loader.<LoginUserController>getController();
-        Stage stage2=new Stage();
-        
-        
-        stage2.setScene(new Scene((Pane) loader.load()));
-        
-        stage2.setResizable(false);
-        loader.<LoginUserController>getController().initData(stage2);
-        //if(loader.<LoginUserController>getController() == null)System.out.println("lala");
-        stage2.show();
+        stage.setScene(new Scene((Pane) loader.load()));
+        stage.setResizable(false);
+        loader.<LoginUserController>getController().initData(stage);
+        ArrayList<Bodega> arrayList = new ArrayList<>();
+        arrayList.add(new Bodega("", "1"));
+        List<Articulo> articulos = ArticuloDAO.getInstance().select().AllInBodegaList(arrayList);
+        for (Articulo ar : articulos) Mensajes.InformationDialog(ar.getCodigo() + " " + ar.getDescripcion(), stage);
+        stage.show();
     }
 
     /**

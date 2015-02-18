@@ -30,7 +30,7 @@ public class DataBase extends Observable implements Observer {
         FileInputStream fis;
         basicDataSource = new BasicDataSource();
         try {
-            fis = new FileInputStream("db.properties");
+            fis = new FileInputStream("C:\\Users\\Casa\\IdeaProjects\\Inge\\src\\db.properties");
             props.load(fis);
             this.host = props.getProperty("DBHost");
             this.host = props.getProperty("DBUrl");

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class ArticuloDAO {
     private static ArticuloDAO ourInstance = new ArticuloDAO();
-    private ResultSetProcessor<Articulo> processor = (rs, rw) -> {
+    public static ResultSetProcessor<Articulo> processor = (rs, rw) -> {
         Articulo art = new Articulo(rs.getNString("id"), rs.getNString("desc"), rs.getDouble("cost"), rs.getDouble("util"), true);
         art.setEsGrabado(rs.getByte("grav") == 1);
         return art;
@@ -32,23 +32,40 @@ public class ArticuloDAO {
     private ArticuloDAO() {
     }
 
-    public List<Articulo> select() {
-        return null;
+    public IntermediateArticuloSelect select() {
+        return new IntermediateArticuloSelect();
     }
 
     public class IntermediateArticuloSelect implements IntermediateSelect<Articulo, String> {
         Bodega bodegaOrigen = null;
-        boolean buscarEnTodasLasBodegas = false;
+        boolean buscarEnTodasLasBodegas = true;
 
+        /**
+         * Getter for Bodega
+         *
+         * @return the Selected Bodega, null if Bodegas hasn't being set
+         */
         public Bodega getBodegaOrigen() {
             return bodegaOrigen;
         }
 
-        public IntermediateSelect setBodegaOrigen(Bodega origen) {
+        /**
+         * Sets the Bodega to restrict the search
+         *
+         * @param origen The Bodega
+         * @return the modified object
+         */
+        public IntermediateArticuloSelect setBodegaOrigen(Bodega origen) {
             this.bodegaOrigen = origen;
+            this.buscarEnTodasLasBodegas=false;
             return this;
         }
 
+        /**
+         * Set if search must include all Bodegas
+         * @param s True to enable
+         * @return Modified Object
+         */
         public IntermediateSelect setBuscarTodaslasBodegas(boolean s) {
             this.buscarEnTodasLasBodegas = s;
             return this;
@@ -91,7 +108,7 @@ public class ArticuloDAO {
             Articulo a = null;
             try (Connection c = DataBase.getInstance().getConnection()) {
                 Statement stm = c.createStatement();
-                ResultSet rs = stm.executeQuery("SELECT * FROM TB_Articulo WHERE TB_Articulo.id = " + pk);
+                ResultSet rs = stm.executeQuery("SELECT * FROM TB_Articulo WHERE TB_Articulo.id = '" + pk+"'");
                 while (rs.next())
                     a = processor.process(rs, 0);
             } catch (SQLException e) {
@@ -105,8 +122,65 @@ public class ArticuloDAO {
         final public List<Articulo> where(Predicate<Articulo>... pl) {
             if (pl.length == 0) return all();
             Predicate<Articulo> ini = pl[0];
-            for (int i = 1; i < pl.length; i++) ini.and(pl[i]);
+            for (int i = 1; i < pl.length; i++) ini = ini.and(pl[i]);
             return all().stream().filter(ini).collect(Collectors.toList());
+        }
+
+        /**
+         * Retrieves all the Articulos that match the idList
+         *
+         * @param idList A list containing the desired Articulos
+         * @return A new List with the Articulos found
+         */
+        final public List<Articulo> fromIdList(List<String> idList) {
+            Articulo a = null;
+            List<Articulo> articulos = new ArrayList<>();
+            try (Connection c = DataBase.getInstance().getConnection()) {
+                Statement stm = c.createStatement();
+                StringBuilder sb = new StringBuilder();
+                idList.stream().forEach(s -> sb.append("'").append(s).append("',"));
+                sb.deleteCharAt(sb.lastIndexOf(","));
+                String sql = "";
+                if (buscarEnTodasLasBodegas)
+                    sql = "SELECT * FROM TB_Articulo art where art.id IN (" + sb.toString() + ")";
+                else
+                    sql = "SELECT * FROM TB_Articulo art where art.id IN (SELECT inv.code_art FROM TB_Inventario inv WHERE inv.code_art IN (" + sb.toString() + ") AND inv.code_bod = '" + bodegaOrigen.getCodigo() + "')";
+                ResultSet rs = stm.executeQuery(sql);
+                while (rs.next()) {
+                    a = processor.process(rs, 0);
+                    if (a != null) articulos.add(a);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return articulos;
+        }
+
+        /**
+         * Retrieves all Articulos for a Bodega Set
+         *
+         * @param bodegas the list of Bodegas to Search for
+         * @return a List containing all the Objects for that Bodega
+         */
+        final public List<Articulo> AllInBodegaList(List<Bodega> bodegas) {
+            List<Articulo> articulos = new ArrayList<>();
+            Articulo a;
+            try (Connection c = DataBase.getInstance().getConnection()) {
+                Statement stm = c.createStatement();
+                StringBuilder sb = new StringBuilder();
+                bodegas.stream().forEach(s -> sb.append("'").append(s.getCodigo()).append("',"));
+                sb.deleteCharAt(sb.lastIndexOf(","));
+                String sql = "";
+                sql = "SELECT * FROM TB_Articulo art where art.id IN (SELECT DISTINCT(inv.code_art) FROM TB_Inventario inv WHERE inv.code_bod IN (" + sb.toString() + "))";
+                ResultSet rs = stm.executeQuery(sql);
+                while (rs.next()) {
+                    a = processor.process(rs, 0);
+                    if (a != null) articulos.add(a);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return articulos;
         }
     }
 }

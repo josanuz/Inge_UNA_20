@@ -9,16 +9,16 @@ import Modelo.Beans.Articulo;
 import Modelo.Beans.Cliente;
 import Modelo.Beans.Proveedor;
 import Modelo.Beans.Usuario;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javafx.collections.ObservableList;
 
 /**
- *
  * @author geykel
  */
 public class CargarDatos {
-
     public static void cargarProveedores(ObservableList<Proveedor> list) throws SQLException, ClassNotFoundException {
         ResultSet rs = DataBase.getInstance().ExecuteQuery("select * from gsisinve.proveedor");
         Proveedor p;
@@ -48,45 +48,45 @@ public class CargarDatos {
         Articulo ar;
         if (rs != null) {
             while (rs.next()) {
-                ar = new Articulo(rs.getString("codigo"), rs.getString("descripcion"), rs.getDouble("costo"), rs.getString("utilidad"), rs.getBoolean("esgrabado"));
+                ar = new Articulo(rs.getString("codigo"), rs.getString("descripcion"), rs.getDouble("costo"), rs.getDouble("utilidad"), rs.getBoolean("esgrabado"));
                 list.add(ar);
             }
             rs.close();
         }
     }
-    public static void cargarClientes(ObservableList<Cliente> list) throws ClassNotFoundException, SQLException{
+
+    public static void cargarClientes(ObservableList<Cliente> list) throws ClassNotFoundException, SQLException {
         ResultSet rs = DataBase.getInstance().ExecuteQuery("select * from gsisinve.cliente");
         Cliente cl;
         if (rs != null) {
             while (rs.next()) {
-                cl = new Cliente( rs.getString("nombre"), rs.getString("email"), rs.getString("telefono"),rs.getInt("codigo"),rs.getString("direccion_entrega"));
+                cl = new Cliente(rs.getString("nombre"), rs.getString("email"), rs.getString("telefono"), rs.getInt("codigo"), rs.getString("direccion_entrega"));
                 list.add(cl);
             }
             rs.close();
         }
     }
-    
-    public static Cliente cargarCliente(String cedula) throws ClassNotFoundException, SQLException{
-        ResultSet rs = DataBase.getInstance().ExecuteQuery("select * from gsisinve.cliente where cedula='"+cedula+"'");
-        Cliente cl=null;
+
+    public static Cliente cargarCliente(String cedula) throws ClassNotFoundException, SQLException {
+        ResultSet rs = DataBase.getInstance().ExecuteQuery("select * from gsisinve.cliente where cedula='" + cedula + "'");
+        Cliente cl = null;
         if (rs != null) {
             while (rs.next()) {
-                cl = new Cliente( rs.getString("nombre"), rs.getString("email"), rs.getString("telefono"),rs.getInt("codigo"),rs.getString("direccion_entrega"));
-                
+                cl = new Cliente(rs.getString("nombre"), rs.getString("email"), rs.getString("telefono"), rs.getInt("codigo"), rs.getString("direccion_entrega"));
             }
             rs.close();
         }
         return cl;
-    
     }
-    public static Articulo cargarArticulo(String codigo) throws ClassNotFoundException, SQLException{
-        String query = "select * from gsisinve.articulo where codigo='"+codigo+"'";
-        Articulo ar=null;
+
+    public static Articulo cargarArticulo(String codigo) throws ClassNotFoundException, SQLException {
+        String query = "select * from gsisinve.articulo where codigo='" + codigo + "'";
+        Articulo ar = null;
         ResultSet rs = DataBase.getInstance().ExecuteQuery(query);
         //password = null;
         if (rs != null) {
             rs.next();
-            ar = new Articulo(rs.getString("codigo"), rs.getString("descripcion"), rs.getDouble("costo"), rs.getString("utilidad"), rs.getBoolean("esgrabado"));
+            ar = new Articulo(rs.getString("codigo"), rs.getString("descripcion"), rs.getDouble("costo"), rs.getDouble("utilidad"), rs.getBoolean("esgrabado"));
         }
         rs.close();
         return ar;
@@ -102,17 +102,16 @@ public class CargarDatos {
             password = rs.getString("password");
         }
         rs.close();
-
         System.out.println(password);
         return password;
     }
-    
-    public static int countRows(String tableName) throws ClassNotFoundException, SQLException{
+
+    public static int countRows(String tableName) throws ClassNotFoundException, SQLException {
         ResultSet rs = DataBase.getInstance().ExecuteQuery("SELECT COUNT(*) FROM gsisinve." + tableName);
-        int rowcount=0;
-        if(rs!=null){
+        int rowcount = 0;
+        if (rs != null) {
             rs.next();
-            rowcount=rs.getInt(1);
+            rowcount = rs.getInt(1);
         }
         rs.close();
         return rowcount;

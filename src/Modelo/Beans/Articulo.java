@@ -64,6 +64,10 @@ public class Articulo {
         this.esGrabado.set(grabado);
     }
 
+    public String toString() {
+        return this.getCodigo();
+    }
+
     private StringProperty codigo;
     private StringProperty descripcion;
     private DoubleProperty costo;
